@@ -1,30 +1,21 @@
 'use strict';
 const userModel = require('../usermodel.js');
- app.exports.register = function(req, res){
-    var user = {'user':'user'};
-   var a = 4;
-    var b = 5;
-    user['sum'] = a+b;
+module.exports.register = function(req, res){
 
     var newUser = new userModel({
-        firstName: req.body.name
+      firstName: req.body.firstname
+    });
+    newUser.save(function (err) {
+      if(err)
+      console.log(err);
     });
     res.send(req.body);
 
 };
 
+module.exports.getAll = function(req,res){
 
-//var mongoose = require('mongoose') , User = mongoose.model('User');
-/*
-app.post('/create', function(request, response){
-    var user = new User();
-    user.email = request.body.email;
-
-    return user.Save().then(function(users) {
-        // some code if save succeed
-    }, function(err){
-        // some code if save failed
-    });
-})};
-*/
-
+  userModel.find({},function(err,users) {
+    res.send(users);
+  });
+}

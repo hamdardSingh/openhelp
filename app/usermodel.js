@@ -14,19 +14,4 @@ var userLogin = new mongoose.Schema({
 
 var userDetails = db.model('user',userLogin);
 
-app.exports =userDetails;
-
-/*
-var mongoose = require('mongoose') , Schema = mongoose.Schema, Q = require('q')
-;
-
-var UserSchema = mongoose.Schema({
-    email: String,
-})
-
-UserSchema.methods.Save = function() {
-    return Q.ninvoke(this, 'save');
-}
-
-var User = mongoose.model('User', UserSchema);
-*/
+module.exports =userDetails;

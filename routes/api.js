@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const user = require("../app/controller/userController.js");
 /* GET home page. */
 router.get('/search', function(req, res, next) {
   console.log(req);
@@ -8,11 +8,12 @@ console.log(res);
   res.send({ title: 'Expresss' });
 });
 
-router.get('/register', function(req, res) {
-    const user = require("../app/controller/userController.js");
-    req.body = {firstname:'sandeep',email:'abc'};
-    user.register(req, res);
+router.post('/register', function(req, res) {
+    user.register(req, res)
+});
 
+router.get('/user/getAll', function(req, res) {
+    user.getAll(req, res);
 });
 
 
