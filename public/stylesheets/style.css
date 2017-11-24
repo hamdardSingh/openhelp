@@ -138,3 +138,11 @@ body {
   textarea {
       resize: none;
   }
+
+  .dmarginTop{
+      margin-top: 60px;
+  }
+
+  form.register-form{
+    display: none;
+}
