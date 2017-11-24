@@ -1,15 +1,32 @@
 var mongoose = require('mongoose');
 
-schema = mongoose.schema;
+var db = mongoose.createConnection('localhost', 'openhelp');
+var Schema = mongoose.Schema;
 
-var userLogin = new schema({
-    firstName: string,
-    lastName: string,
-    emailId: string,
-    dateOfBirth: string,
-    mobiltNo: number
+var userLogin = new mongoose.Schema({
+    firstName: 'string',
+    lastName: 'string',
+    emailId: 'string',
+    dateOfBirth: 'string',
+    mobileNo: 'number',
+    password:'string'
 })
 
-var userDetails = mongoose.modal('user',userLogin);
+var userDetails = db.model('user',userLogin);
 
-module.exports =userDetails;
+app.exports =userDetails;
+
+/*
+var mongoose = require('mongoose') , Schema = mongoose.Schema, Q = require('q')
+;
+
+var UserSchema = mongoose.Schema({
+    email: String,
+})
+
+UserSchema.methods.Save = function() {
+    return Q.ninvoke(this, 'save');
+}
+
+var User = mongoose.model('User', UserSchema);
+*/
