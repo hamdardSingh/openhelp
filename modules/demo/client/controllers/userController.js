@@ -8,6 +8,5 @@ $scope.display = function(){
   var a = 12*3;
   console.log(a);
 }
-
 }
 ]);
