@@ -4,9 +4,8 @@ var db = mongoose.createConnection('localhost', 'openhelp');
 var Schema = mongoose.Schema;
 
 var userLogin = new mongoose.Schema({
-    firstName: 'string',
-    lastName: 'string',
-    emailId: 'string',
+    name: 'string',
+    email: 'string',
     dateOfBirth: 'string',
     mobileNo: 'number',
     password:'string'
