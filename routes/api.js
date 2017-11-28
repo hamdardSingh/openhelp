@@ -12,6 +12,10 @@ router.post('/register', function(req, res) {
     user.register(req, res)
 });
 
+router.post('/login', function(req, res) {
+    user.login(req, res)
+});
+
 router.get('/user/getAll', function(req, res) {
     user.getAll(req, res);
 });
