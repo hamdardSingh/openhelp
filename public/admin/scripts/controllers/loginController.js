@@ -11,7 +11,7 @@ angular.module('openHelpApp')
         if(data.data && data.data.error == 1){
           $scope.usererror = true;
           $scope.passerror = true;
-        }else{
+        }else if(data.data && data.data.error == 0){
           $state.go('dashboard.home');
         }
       })
