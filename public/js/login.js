@@ -42,22 +42,19 @@ $(function() {
                         $('input[name="'+data.focus+'"]').focus().css({'border-color':'#f44','box-shadow':'0 0 8px #f44'});
                     }
                 }else{
-                    if(data.redir == "okk"){
+                    if(data.redir == "ok"){
                         $this.parent().prepend('<div class="alert alert-success">Login successfull, redirecting...</div>');
-                        window.location = 'home.php';
+                        window.location = '/user/';
                     }else{
                         $this.parent().prepend('<div class="alert alert-success">'+data.message+'</div>');
                     }
                 }
-            },"JSON").error(function(){
+            },"JSON").fail(function(){
                 alert('Request not complete.');
             }).always(function(){
                 btn.button('reset')
             });
         }
-        setTimeout(function(){
-
-        },100)
 
     });
 });
