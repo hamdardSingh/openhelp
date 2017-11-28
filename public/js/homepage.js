@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function(){
     // Initialize Tooltip
     $('[data-toggle="tooltip"]').tooltip();
@@ -27,8 +26,7 @@ $(document).ready(function(){
         } // End if
     });
 })
-</script>
-<script>
+
 $(document).ready(function(e){
     $('.search-panel .dropdown-menu').find('a').click(function(e) {
         e.preventDefault();
@@ -38,4 +36,3 @@ $(document).ready(function(e){
         $('.input-group #search_param').val(param);
     });
 });
-</script>

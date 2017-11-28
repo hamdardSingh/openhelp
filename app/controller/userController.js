@@ -36,18 +36,21 @@ module.exports.register = function(req, res){
                 }
             });
     }
+};
 
-    };
-
-
-    //res.send(req.body);
-
-
+module.exports.login = function(req,res){
+  userModel.findOne({'email':req.body.username,'password':req.body.password},function(err,users) {
+    var result = {};
+    if(users){
+      result = {error:0, redir: 'ok'};
+    }else{
+      result = {error:1,message:'invalid username or password'};
+    }
+    res.send(result);
+  });
+}
 
 module.exports.getAll = function(req,res){
-
-
-
   userModel.find({},function(err,users) {
     res.send(users);
   });
