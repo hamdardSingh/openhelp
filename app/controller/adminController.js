@@ -8,9 +8,11 @@ module.exports.login = function(req,res){
 	var result = {};
   adminModel.findOne({'email':username,'password':pass},function(err,users) {
     if(users){
+    	req.session.user = users;
     	result = {error:0, user: users};
+    	
     }else{
-    	result = {error:1};
+    	result = {error:1,user:req.session.user};
     }
     
     res.send(result);
