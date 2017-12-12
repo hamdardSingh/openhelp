@@ -30,9 +30,13 @@ router.get('/api/v1/categories', function(req, res) {
   category.get(req, res);
 });
 
+router.get('/api/v1/dummy',function(req,res) {
+  admin.createDummy(req,res);
+})
+
 router.post('/api/v1/categories', function(req, res, next) {
 	category.edit(req,res);
-});
+})
 
 router.delete('/api/v1/categories/:ID', function(req, res, next) {
 	category.delete(req,res);
