@@ -1,0 +1,36 @@
+<div class="container-fluid ng-scope">
+	<div class="row">
+    <div class="col-lg-12">
+      <div class="alert" ng-class="error.type" ng-if="error.type">
+        {{error.msg}}
+      </div>
+    </div>
+		<div class="col-lg-12">
+			<h1 class="page-header">Users</h1>
+		</div>
+    <div class="col-lg-12">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Date of birth</th>
+          <th>Action</th>
+        </tr>
+        <tr ng-repeat="list in list">
+          <td>{{list.name}}</td>
+          <td>{{list.email}}</td>
+          <td>{{list.dateOfBirth}}</td>
+          <td>
+            <button class="btn btn-circle btn-primary" tooltip="Edit" tooltip-trigger="mouseenter">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-circle btn-danger" tooltip="Delete" tooltip-trigger="mouseenter">
+              <i class="fa fa-trash"></i>
+            </button>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+	</div>
+</div>
