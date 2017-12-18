@@ -1,5 +1,6 @@
 'use strict';
 const userModel = require('../usermodel.js');
+const mailer_custom = require('../mailer/mail.js');
 module.exports.register = function(req, res){
 
     if(req.body && req.body.length == 0){
@@ -17,25 +18,33 @@ module.exports.register = function(req, res){
 
         userModel.findOne({email: req.body.email}).then(function(result) {
 
-                if (result) {
+                if (result && 1!=1) {
                     res.send({'error': 1, 'message': 'Email Id already exists'});
                 } else {
+                    var random =Math.floor(Math.random() * 999999999999999999);
                     var newUser = new userModel({
                         name: req.body.username,
                         email: req.body.email,
-                        password: req.body.password
+                        password: req.body.password,
+                        status: 0,
+                        token:random
 
                     });
                     newUser.save(function (err) {
                         if (err) {
                             console.log(err);
                         } else {
+                            var msg = "Dear "+req.body.username+", \n Please click on link below to activate your account: \n http://localhost:3000/user/activate/"+random;
+                            mailer_custom.mail(req.body.email,'Account Activation - openHelp',msg,res);
                             res.send({'error': 0, 'message': 'Account successfully created'});
                         }
                     });
                 }
             });
     }
+
+
+
 };
 
 module.exports.login = function(req,res){

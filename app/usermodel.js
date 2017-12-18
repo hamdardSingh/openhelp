@@ -8,7 +8,9 @@ var userLogin = new mongoose.Schema({
     email: 'string',
     dateOfBirth: 'string',
     mobileNo: 'number',
-    password:'string'
+    password:'string',
+    status: 'boolean',
+    token: 'string'
 })
 
 var userDetails = db.model('user',userLogin);
