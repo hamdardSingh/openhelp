@@ -37,7 +37,8 @@ angular
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js',
+                    'scripts/httpService.js'
                     ]
                 }),
                 $ocLazyLoad.load(
@@ -94,6 +95,22 @@ angular
           }
         }
       })
+
+      .state('dashboard.users',{
+        templateUrl:'views/usersList.html',
+        url:'/users',
+        controller: 'listController',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'openHelpApp',
+              files:[
+              'scripts/controllers/listController.js'
+              ]
+            })
+          }
+        }
+    })
       .state('dashboard.form',{
         templateUrl:'views/form.html',
         url:'/form'
