@@ -8,11 +8,10 @@ var userLogin = new mongoose.Schema({
     email: 'string',
     dateOfBirth: 'string',
     mobileNo: 'number',
-    password:'string',
-    status: 'boolean',
-    token: 'string'
+    group: 'number',
+    password:'string'
 })
 
-var userDetails = db.model('user',userLogin);
+var admin = db.model('admin',userLogin);
 
-module.exports =userDetails;
+module.exports =admin;

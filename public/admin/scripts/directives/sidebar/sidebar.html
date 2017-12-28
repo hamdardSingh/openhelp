@@ -5,37 +5,37 @@
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <li ui-sref-active="active">
+            <li>
 
-                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span></span></a>
+                <a ui-sref="dashboard.blank"><i class="fa fa-table fa-fw"></i> Cases List<span></span></a>
 
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="dashboard.table"><i class="fa fa-table fa-fw"></i> Tables</a>
+            <li>
+                <a ui-sref="dashboard.blank"><i class="fa fa-list fa-fw"></i> Categories</a>
             </li>
-            <li ui-sref-active="active">
+            <li>
                 <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
             </li>
             <li ng-class="{active: collapseVar==1}">{{dropDown}}
                 <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> UI Elements<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" collapse="collapseVar!=1">
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.panels-wells">Panels and Wells</a>
                     </li>
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.buttons">Buttons</a>
                     </li>
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.notifications">Notifications</a>
                     </li>
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.typography">Typography</a>
                     </li>
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.icons"> Icons</a>
                     </li>
-                    <li ui-sref-active="active">
+                    <li >
                         <a ui-sref="dashboard.grid">Grid</a>
                     </li>
                 </ul>
@@ -74,19 +74,19 @@
                 <!-- /.nav-second-level -->
             </li>
             <li ng-class="{active:collapseVar==4}">
-                <a href="" ng-click="check(4)"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span
+                <a ui-sref="dashboard.users" ng-click="check(4)"><i class="fa fa-users fa-fw"></i> Users<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" collapse="collapseVar!=4">
                     <li ng-class="{active: selectedMenu=='blank'}">
-                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">Blank Page</a>
+                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">User Groups</a>
                     </li>
                     <li>
-                        <a ui-sref="login">Login Page</a>
+                        <a ui-sref="dashboard.blank">Permissions</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-            <li><a href="http://www.strapui.com/">Premium Angular Themes</a></li>
+
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
