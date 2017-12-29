@@ -3,7 +3,7 @@ var router = express.Router();
 var Handlebars  = require('express-handlebars');
 //Handlebars.registerPartial('sidebar', 'includes/sidebar')
 /* GET users listing. */
-router.get('/welcome', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('user/Welcome', {title: 'Expresss' });
 });
 
