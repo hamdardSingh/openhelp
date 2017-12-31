@@ -1,0 +1,128 @@
+<style media="screen">
+	#map{
+		width: 100%;
+		height: 300px;
+	}
+
+	#description {
+			 font-family: Roboto;
+			 font-size: 15px;
+			 font-weight: 300;
+		 }
+
+		 #infowindow-content .title {
+			 font-weight: bold;
+		 }
+
+		 #infowindow-content {
+			 display: none;
+		 }
+
+		 #map #infowindow-content {
+			 display: inline;
+		 }
+
+
+		 .pac-container {
+			 z-index: 999999999999999999!important;
+		 }
+
+		 .pac-controls {
+			 display: inline-block;
+			 padding: 5px 11px;
+		 }
+
+		 .pac-controls label {
+			 font-family: Roboto;
+			 font-size: 13px;
+			 font-weight: 300;
+		 }
+
+
+</style>
+<div class="modal-header">
+	<h4 ng-if="row._id" class="modal-title"><i class="fa fa-refresh"></i> Update <small>Admin user</small></h4>
+	<h4 ng-if="!row._id" class="modal-title"><i class="fa fa-plus-circle"></i> Add <small>Admin user</small></h4>
+</div>
+<div class="modal-body">
+	<div class="alert alert-danger" ng-if="response.error"><i class="fa fa-warning"></i> {{response.msg}}</div>
+        <div class="alert alert-success" ng-if="row._id && response.error===0"><i class="fa fa-check"></i> Admin user Updated.</div>
+        <div class="alert alert-success" ng-if="!row._id && response.error===0"><i class="fa fa-check"></i> Admin user Added.</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<form name="AdminForm" ng-submit="AdminForm.$valid && ok()" novalidate>
+			<div class="form-group" ng-class="{'has-error':AdminForm.name.$invalid}">
+				<label class="control-label" for="name">Name</label>
+				<input class="form-control" type="text" name="name" id="name" ng-model="row.name" ng-maxlength="30" ng-minlength="4" ng-required=true>
+			</div>
+			<div class="form-group" ng-class="{'has-error':AdminForm.email.$invalid}">
+				<label class="control-label" for="name">Email</label>
+				<input class="form-control" type="text" name="email" id="email" ng-model="row.email" ng-maxlength="30" ng-minlength="4" ng-required=true>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error':AdminForm.contact.$invalid}">
+				<label class="control-label" for="contact">Contact Phone</label>
+				<input class="form-control" type="number" name="contact" id="contact" ng-model="row.mobileNo" ng-maxlength="30" ng-minlength="4" ng-required=true>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error':AdminForm.password.$invalid}">
+				<label class="control-label" for="password">Password</label>
+				<input class="form-control" type="password" name="password" id="password" ng-model="row.password" ng-maxlength="30" ng-minlength="4" ng-required=true>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group" ng-class="{'has-error':AdminForm.managingArea.$invalid}">
+						<label class="control-label" for="managingArea">Managing area</label>
+						<input class="form-control" type="text" name="managingArea" id="managingArea" ng-model="row.managingArea" ng-maxlength="60" ng-minlength="2" ng-required=true>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" ng-class="{'has-error':AdminForm.radius.$invalid}">
+						<label class="control-label" for="radius">Radius</label>
+						<select class="form-control" name="radius" id="radius" ng-required="true" ng-model="row.radius" ng-change="mapCircle()">
+							<option value="">--Please Select Radius -- </option>
+							<option value="10">10 KM</option>
+							<option value="20">20 KM</option>
+							<option value="30">30 KM</option>
+							<option value="40">40 KM</option>
+							<option value="50">50 KM</option>
+							<option value="60">60 KM</option>
+							<option value="70">70 KM</option>
+							<option value="80">80 KM</option>
+							<option value="90">90 KM</option>
+							<option value="100">100 KM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div id="map">
+
+				</div>
+				<div id="infowindow-content">
+		      <img src="" width="16" height="16" id="place-icon">
+		      <span id="place-name"  class="title"></span><br>
+		      <span id="place-address"></span>
+    		</div>
+			</div>
+
+			<div class="form-group">
+				<div class="checkbox">
+				<label class="control-label"><input type="checkbox" ng-model="row.root" ng-checked="row.root == 1" ng-true-value="1" ng-false-value="0"> IS ROOT</label>
+				</div>
+
+			</div>
+
+
+			</form>
+
+
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button ng-if="row._id" class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="AdminForm.$invalid">Update User</button>
+	<button ng-if="!row._id" class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="AdminForm.$invalid">Add User</button>
+	<button  class="btn btn-danger" type="button" ng-click="cancel()">Close</button>
+</div>

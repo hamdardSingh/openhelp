@@ -11,80 +11,17 @@
 
             </li>
             <li>
-                <a ui-sref="dashboard.blank"><i class="fa fa-list fa-fw"></i> Categories</a>
+                <a ui-sref="dashboard.cusers"><i class="fa fa-users fa-fw"></i> Users</a>
             </li>
-            <li>
-                <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
-            </li>
-            <li ng-class="{active: collapseVar==1}">{{dropDown}}
-                <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> UI Elements<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=1">
-                    <li >
-                        <a ui-sref="dashboard.panels-wells">Panels and Wells</a>
-                    </li>
-                    <li >
-                        <a ui-sref="dashboard.buttons">Buttons</a>
-                    </li>
-                    <li >
-                        <a ui-sref="dashboard.notifications">Notifications</a>
-                    </li>
-                    <li >
-                        <a ui-sref="dashboard.typography">Typography</a>
-                    </li>
-                    <li >
-                        <a ui-sref="dashboard.icons"> Icons</a>
-                    </li>
-                    <li >
-                        <a ui-sref="dashboard.grid">Grid</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li ng-class="{active: collapseVar==2}">
-                <a href="" ng-click="check(2)"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=2">
-                    <li>
-                        <a href="">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="">Second Level Item</a>
-                    </li>
-                    <li ng-init="third=!third" ng-class="{active: multiCollapseVar==3}">
-                        <a href="" ng-click="multiCheck(3)">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level" collapse="multiCollapseVar!=3">
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="">Third Level Item</a>
-                            </li>
 
-                        </ul>
-                        <!-- /.nav-third-level -->
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+
+            <li ng-class="{active:collapseVar==5}">
+                <a ui-sref="dashboard.categories" ng-click="check(5)"><i class="fa fa-list fa-fw"></i> Categories</a>
+
             </li>
             <li ng-class="{active:collapseVar==4}">
-                <a ui-sref="dashboard.users" ng-click="check(4)"><i class="fa fa-users fa-fw"></i> Users<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=4">
-                    <li ng-class="{active: selectedMenu=='blank'}">
-                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">User Groups</a>
-                    </li>
-                    <li>
-                        <a ui-sref="dashboard.blank">Permissions</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+                <a ui-sref="dashboard.users" ng-click="check(4)"><i class="fa fa-user fa-fw"></i> Admin Users</a>
+
             </li>
 
         </ul>

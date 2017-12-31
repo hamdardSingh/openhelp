@@ -98,19 +98,35 @@ angular
 
       .state('dashboard.users',{
         templateUrl:'views/usersList.html',
-        url:'/users',
+        url:'/adminusers',
         controller: 'listController',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'openHelpApp',
               files:[
-              'scripts/controllers/listController.js'
+              'scripts/controllers/listController.js',
+              'scripts/controllers/editAdminController.js'
               ]
             })
           }
         }
     })
+    .state('dashboard.categories',{
+      templateUrl:'views/categoryList.html',
+      url:'/categories',
+      controller: 'listController',
+      resolve: {
+        loadMyFiles:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            name:'openHelpApp',
+            files:[
+            'scripts/controllers/listController.js'
+            ]
+          })
+        }
+      }
+  })
       .state('dashboard.form',{
         templateUrl:'views/form.html',
         url:'/form'

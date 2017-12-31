@@ -1,6 +1,9 @@
 'use strict';
 var app = require('express')();
 var mailer = require('express-mailer');
+var path = require('path');
+app.set('views', path.join(__dirname, '../../views'));
+app.set('view engine', 'hbs');
 
 mailer.extend(app, {
     from: 'admin@php-gym.com',
@@ -16,7 +19,7 @@ mailer.extend(app, {
 module.exports.mail = function(to, subject, message){
 
 
-    app.mailer.send('views/email/text.hbs', {
+    app.mailer.send('email/text.hbs', {
         to: to,
         subject: subject,
         msg: message

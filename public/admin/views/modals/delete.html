@@ -1,0 +1,12 @@
+<div class="modal-header">
+	<h4 class="modal-title"><i class="fa fa-times-circle"></i> Confirm Delete <small>{{row.name || row.customer_name }}</small></h4>
+</div>
+<div class="modal-body">
+	<div class="alert alert-danger" ng-if="response.error"><i class="fa fa-warning"></i> {{response.msg}}</div>
+	<div class="alert alert-success" ng-if="response.error===0"><i class="fa fa-check"></i> Row Deleted.</div>
+      	<div class="alert alert-warning"><i class="fa fa-warning"></i> Are you sure to delete <strong>{{row.name || row.customer_name}}</strong>, this action can't be reversed</div>  
+</div>            
+<div class="modal-footer">
+	<button class="btn btn-warning" type="button" ng-click="ok()" ><i class="fa fa-trash"></i> Delete</button>
+	<button class="btn btn-danger" type="button" ng-click="cancel()"><i class="fa fa-time"></i> Close</button>
+</div>
