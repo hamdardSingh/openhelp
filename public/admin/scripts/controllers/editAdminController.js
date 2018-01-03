@@ -1,6 +1,6 @@
 'use strict';
 angular.module('openHelpApp')
-.controller('editAdminController',function($scope,$rootScope,$modalInstance,$state,$timeout,httpService,row,extra){
+.controller('editAdminController',function($scope,$rootScope,$modalInstance,$state,$timeout,httpService,Upload,row,extra){
   $scope.oldRow = row;
   $scope.row = angular.copy($scope.oldRow);
   $scope.response = {};
@@ -48,7 +48,8 @@ angular.module('openHelpApp')
       marker.setVisible(false);
       var place = autocomplete.getPlace();
       latlng = place.geometry.location;
-      $scope.row.latlng = latlng;
+      $scope.row.latlng = {lat:latlng.lat(),lng:latlng.lng()};
+  
       $scope.row.managingArea = place.formatted_address;
       if (!place.geometry) {
         window.alert("No details available for input: '" + place.name + "'");
@@ -109,12 +110,24 @@ angular.module('openHelpApp')
   });
 
   $scope.ok = function () {
-  httpService.post('/adminusers',$scope.row).then(function (resp) {
-    $scope.response = resp.data;
-    if(resp.data.error==0){
-      $state.reload();
-    }
-  })
+
+      if($scope.file){
+        $scope.row.file = $scope.file;
+      }
+      Upload.upload({
+           url: '/admin/api/v1/adminusers',
+           data: $scope.row
+       }).then(function (resp) {
+          $scope.response = resp.data;
+          if(resp.data.error==0){
+            $state.reload();
+          }
+       }, function (resp) {
+          $scope.response = {error:1,msg:resp.status};
+       }, function (evt) {
+           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+           console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+       });
   }
 
 

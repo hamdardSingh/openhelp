@@ -1,4 +1,6 @@
 var express = require('express');
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty();
 var router = express.Router();
 const admin = require("../app/controller/adminController.js");
 const category = require("../app/controller/categoryController.js");
@@ -9,14 +11,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/api/v1/login', function(req, res, next) {
 	admin.login(req,res);
-
 });
 
 router.get('/api/v1/adminusers', function(req, res) {
     admin.usersList(req, res);
 });
 
-router.post('/api/v1/adminusers', function(req, res, next) {
+router.post('/api/v1/adminusers', multipartyMiddleware, function(req, res, next) {
 	admin.edit(req,res);
 });
 

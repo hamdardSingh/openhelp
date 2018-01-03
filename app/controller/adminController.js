@@ -1,6 +1,6 @@
 'use strict';
 const adminModel = require('../adminmodel.js');
-
+var fs = require('fs');
 
 module.exports.login = function(req,res){
 	var username = req.body.username;
@@ -50,6 +50,13 @@ module.exports.edit = function (req,res) {
 					if(err){
 						result = {error:1,msg:err};
 					}else{
+						if(req.files.file){
+							fs.readFile(req.files.file.path, function (err, data) {
+								fs.writeFile('public/images/admin/'+req.body['_id'], data, function (err) {
+
+								});
+							});
+						}
 						result = {error:0,msg:"User Updated"};
 
 					}
@@ -70,9 +77,18 @@ module.exports.edit = function (req,res) {
 
 		});
 		newAdmin.save(function (err,save) {
+			
 			if(err){
 				result = {error:1,msg:err};
 			}else{
+
+				if(req.files.file){
+					fs.readFile(req.files.file.path, function (err, data) {
+						fs.writeFile('public/images/admin/'+save['_id'], data, function (err) {
+
+						});
+					});
+				}
 				result = {error:0,msg:"User Created"};
 
 			}

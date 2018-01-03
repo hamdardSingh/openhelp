@@ -13,6 +13,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'ngFileUpload'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
 
@@ -112,6 +113,21 @@ angular
           }
         }
     })
+    .state('dashboard.cusers',{
+      templateUrl:'views/cusersList.html',
+      url:'/users',
+      controller: 'listController',
+      resolve: {
+        loadMyFiles:function($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            name:'openHelpApp',
+            files:[
+            'scripts/controllers/listController.js',
+            ]
+          })
+        }
+      }
+  })
     .state('dashboard.categories',{
       templateUrl:'views/categoryList.html',
       url:'/categories',
