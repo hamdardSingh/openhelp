@@ -55,7 +55,7 @@
 				<img ng-if="!file && !row['_id']" ngf-thumbnail="'/images/thumb.png'" class="img-circle" style="width:150px">
 				<img ng-if="!file && row['_id']" ngf-thumbnail="'/images/admin/'+row['_id']" class="img-circle" style="width:150px">
 				<img ng-if="file" ngf-thumbnail="file" class="img-circle" style="height:150px">
-				<label class="label label-warning label-md" ngf-select ngf-pattern="'image/*'" name="file" ng-model="file" ngf-accept="'image/*'" ngf-max-size="20MB" style="position: absolute;left: 44%;top: 127px;"><i class="fa fa-camera"></i> choose image</label>
+				<label class="label label-danger label-md" ngf-select ngf-pattern="'image/*'" name="file" ng-model="file" ngf-accept="'image/*'" ngf-max-size="20MB" style="position: absolute;left: 44%;top: 127px;"><i class="fa fa-camera"></i> choose image</label>
 			</div>
 			<div class="form-group" ng-class="{'has-error':AdminForm.name.$invalid}">
 				<label class="control-label" for="name">Name</label>
