@@ -123,7 +123,6 @@ angular
             name:'openHelpApp',
             files:[
             'scripts/controllers/listController.js',
-            'scripts/controllers/editUserController.js'
             ]
           })
         }
