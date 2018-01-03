@@ -1,4 +1,5 @@
 'use strict';
+var fs = require('fs');
 const userModel = require('../usermodel.js');
 const mailer_custom = require('../mailer/mail.js');
 module.exports.register = function(req, res){
@@ -59,8 +60,83 @@ module.exports.login = function(req,res){
   });
 }
 
-module.exports.getAll = function(req,res){
+module.exports.get = function(req,res){
   userModel.find({},function(err,users) {
     res.send(users);
   });
 }
+
+module.exports.edit = function(req, res){
+  var result = [];
+	if(req.body._id){ // IF EXISTS UPDATE
+		userModel.findById(req.body._id,function (err,user) {
+			if(err){
+				result = {error:1,msg:"Something went wrong :("};
+			}else{
+        user.name= req.body.name;
+        user.email= req.body.email;
+        user.dateOfBirth= req.body.dateOfBirth;
+        user.mobileNo= req.body.mobileNo;
+        user.password= req.body.password;
+        user.status= req.body.status;
+
+				user.save(function (err,save) {
+					if(err){
+						result = {error:1,msg:err};
+					}else{
+            if(req.files.file){
+							fs.readFile(req.files.file.path, function (err, data) {
+								fs.writeFile('public/images/user/'+req.body['_id'], data, function (err) {
+
+								});
+							});
+						}
+						result = {error:0,msg:"User Updated"};
+
+					}
+					res.send(result);
+				})
+			}
+		});
+	}else{//If not exists create new admin user
+		var newUser  = new userModel({
+      name: req.body.name,
+      email: req.body.email,
+      dateOfBirth: req.body.dateOfBirth,
+      mobileNo: req.body.mobileNo,
+      password: req.body.password,
+      status: req.body.status
+
+		});
+		newUser.save(function (err,save) {
+			if(err){
+				result = {error:1,msg:err};
+			}else{
+
+        if(req.files.file){
+          fs.readFile(req.files.file.path, function (err, data) {
+            fs.writeFile('public/images/user/'+req.body['_id'], data, function (err) {
+
+            });
+          });
+        }
+				result = {error:0,msg:"User Created"};
+			}
+			res.send(result);
+		});
+	}
+};
+
+
+module.exports.delete = function(req, res){
+  var id = req.params.ID;
+  var result = [];
+  userModel.remove({ '_id': id }, function (err) {
+  if (err){
+    result = {error:1,msg:err};
+  }else {
+    result = {error:0,msg:"Category Deleted"};
+  }
+  res.send(result);
+  });
+};
