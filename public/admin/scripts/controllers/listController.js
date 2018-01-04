@@ -56,7 +56,7 @@ angular.module('openHelpApp')
   $scope.ok = function () {
     httpService.post('/categories',$scope.row).then(function (resp) {
       $scope.response = resp.data;
-      $sate.reload();
+      $state.reload();
     });
   }
 })
@@ -71,7 +71,7 @@ angular.module('openHelpApp')
   $scope.ok = function () {
     httpService.post('/categories',$scope.row).then(function (resp) {
       $scope.response = resp.data;
-      $sate.reload();
+      $state.reload();
     });
   }
 });
