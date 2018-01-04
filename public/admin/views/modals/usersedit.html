@@ -4,8 +4,8 @@
 </div>
 <div class="modal-body">
 	<div class="alert alert-danger" ng-if="response.error"><i class="fa fa-warning"></i> {{response.msg}}</div>
-        <div class="alert alert-success" ng-if="row._id && response.error===0"><i class="fa fa-check"></i> Admin user Updated.</div>
-        <div class="alert alert-success" ng-if="!row._id && response.error===0"><i class="fa fa-check"></i> Admin user Added.</div>
+        <div class="alert alert-success" ng-if="row._id && response.error===0"><i class="fa fa-check"></i> User Updated.</div>
+        <div class="alert alert-success" ng-if="!row._id && response.error===0"><i class="fa fa-check"></i> User Added.</div>
 	<div class="row">
 		<div class="col-xs-12">
 			<form name="AdminForm" ng-submit="AdminForm.$valid && ok()" novalidate>

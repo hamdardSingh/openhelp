@@ -8,5 +8,4 @@ var category = new mongoose.Schema({
 })
 
 var category = db.model('category',category);
-
 module.exports = category;

@@ -13,7 +13,6 @@ var userLogin = new mongoose.Schema({
     radius:'number',
     root:'boolean'
 })
-
 var admin = db.model('admin',userLogin);
 
 module.exports=admin;
