@@ -14,11 +14,9 @@ module.exports.login = function(req,res){
     }else{
     	result = {error:1,user:req.session.user};
     }
-
     res.send(result);
   });
 }
-
 module.exports.usersList = function(req,res){
 	var result = [];
   adminModel.find({},function(err,users) {
@@ -30,7 +28,6 @@ module.exports.usersList = function(req,res){
     res.send(result);
   });
 }
-
 module.exports.edit = function (req,res) {
 	var result = [];
 	if(req.body._id){ // IF EXISTS UPDATE
@@ -77,7 +74,7 @@ module.exports.edit = function (req,res) {
 
 		});
 		newAdmin.save(function (err,save) {
-			
+
 			if(err){
 				result = {error:1,msg:err};
 			}else{
@@ -85,7 +82,6 @@ module.exports.edit = function (req,res) {
 				if(req.files.file){
 					fs.readFile(req.files.file.path, function (err, data) {
 						fs.writeFile('public/images/admin/'+save['_id'], data, function (err) {
-
 						});
 					});
 				}

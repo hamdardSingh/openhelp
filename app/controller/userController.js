@@ -105,7 +105,6 @@ module.exports.edit = function(req, res){
       mobileNo: req.body.mobileNo,
       password: req.body.password,
       status: req.body.status
-
 		});
 		newUser.save(function (err,save) {
 			if(err){

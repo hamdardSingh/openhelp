@@ -12,7 +12,6 @@ var userLogin = new mongoose.Schema({
     status: 'boolean',
     token: 'string'
 })
-
 var userDetails = db.model('user',userLogin);
 
 module.exports =userDetails;
