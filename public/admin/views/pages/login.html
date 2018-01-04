@@ -1,0 +1,24 @@
+<style>body{font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;}.login-page{position:absolute;top:0;left:0;right:0;bottom:0;overflow:auto;background:#3ca2e0;text-align:center;color:#fff;padding:3em}.login-page h1{font-weight:300}.login-page h1 small{color:rgba(255,255,255,.7)}.login-page .form-group{padding:8px 0}.login-page .form-content{padding:40px 0}.input-underline{background:0 0;border:none;box-shadow:none;border-bottom:2px solid rgba(255,255,255,.4);color:#fff;border-radius:0}.input-underline::-moz-placeholder{color:rgba(255,255,255,.7)}.input-underline::-ms-input-placeholder{color:rgba(255,255,255,.7)}.input-underline::-webkit-input-placeholder{color:rgba(255,255,255,.7)}.input-underline:focus{border-bottom:2px solid #fff;box-shadow:none}.btn-outline{background:0 0;border-color:transparent;font-weight:400}.btn-outline:hover{background:0 0;border-color:transparent}.btn-outline.btn-white{box-shadow:0 0 0 2px rgba(255,255,255,.8)inset;color:rgba(255,255,255,.8)}.btn-outline.btn-white:hover{box-shadow:0 0 0 2px #fff inset;color:#fff}.btn-outline.btn-primary{box-shadow:0 0 0 2px #2089c9 inset;color:#2089c9}.btn-outline.btn-primary:hover{box-shadow:0 0 0 2px #3ca2e0 inset;color:#3ca2e0}.btn-outline.btn-success{box-shadow:0 0 0 2px #449d44 inset;color:#449d44}.btn-outline.btn-success:hover{box-shadow:0 0 0 2px #5cb85c inset;color:#5cb85c}.btn-outline.btn-info{box-shadow:0 0 0 2px #31b0d5 inset;color:#31b0d5}.btn-outline.btn-info:hover{box-shadow:0 0 0 2px #5bc0de inset;color:#5bc0de}.btn-outline.btn-warning{box-shadow:0 0 0 2px #ec971f inset;color:#ec971f}.btn-outline.btn-warning:hover{box-shadow:0 0 0 2px #f0ad4e inset;color:#f0ad4e}.btn-outline.btn-danger{box-shadow:0 0 0 2px #c9302c inset;color:#c9302c}.btn-outline.btn-danger:hover{box-shadow:0 0 0 2px #d9534f inset;color:#d9534f}.btn-rounded{border-radius:50px} .has-error .form-control,.has-error .form-control:focus{ box-shadow:none;-webkit-box-shadow:none;}.loading-state{position: absolute;width: 100%;height: 100%;left:0;top: 0;background-color: #fff;opacity: 0.4;}.loading-icon{background: url(assets/images/loading.gif);position: absolute;top: 25%;left: 48%; width: 64px; height: 64px;}</style>
+<div class="login-page">
+	<div class="row">
+		<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
+			<h1>opeHelp <small>Admin</small></h1>
+			<form name="loginForm" autocomplete="off"  novalidate>
+				<div class="form-content">
+					<div class="form-group" ng-class="{ 'has-error' : usererror}">
+						<input type="email" class="form-control input-underline input-lg" name="username" placeholder="Email" ng-model="input.username" ng-required autofocus>
+					</div>
+
+					<div class="form-group" ng-class="{ 'has-error' : passerror}">
+						<input type="password" class="form-control input-underline input-lg" name="password" placeholder="Password" ng-model="input.password" ng-minlength="4" ng-maxlength="20" ng-required>
+					</div>
+				</div>
+
+				<button type="button" class="btn btn-white btn-outline btn-lg btn-rounded" ng-show="input.username && input.password && loginForm.username.$valid && loginForm.password.$valid" ng-click="login()">Login</button>
+
+			</form>
+
+		</div>
+	</div>
+	<div class="loading-state" ng-show="loading"><div class="loading-icon"></div></div>
+</div>

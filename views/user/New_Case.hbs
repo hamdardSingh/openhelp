@@ -1,0 +1,197 @@
+<style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<style>
+    #locationField, #controls {
+        position: relative;
+    }
+
+    .label {
+        text-align: right;
+        font-weight: bold;
+        width: 100px;
+        color: #303030;
+    }
+    #address {
+        border: 1px solid black;
+        background-color: white;
+        width: 100%;
+        padding-right: 10px;
+    }
+    #address td {
+        font-size: 10pt;
+    }
+    .field {
+        width: 99%;
+    }
+    .slimField {
+        width: 100px;
+    }
+    .wideField {
+        width: 230px;
+    }
+    #locationField {
+        height: 0;
+        margin-bottom: 0;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="list-group">
+
+                <a class="list-group-item" href="/user/welcome">welcome</a>
+
+                <a class="list-group-item" href="/user/my-account">My Account</a>
+
+                <a class="list-group-item" href="/user/change-password">Change Password</a>
+
+                <a class="list-group-item active" href="/user/create-new-case">Create New Case</a>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+          <form class="" action="/api/v1/create-case" method="post">
+
+            <div class="form-group">
+              <label>Case Title *</label>
+              <input type="text"  placeholder="Case Title" value="" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Address *</label>
+              <div id="locationField">
+                <input id="autocomplete" class="form-control" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 40px;">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Street no *</label>
+                    <input class="field form-control" id="street_number" disabled="true"></input>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>Route *</label>
+                    <input class="field form-control" id="route" disabled="true"></input>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>City *</label>
+                    <input class="field form-control" id="locality" disabled="true"></input>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Postal *</label>
+                    <input class="field form-control" id="postal_code" disabled="true"></input>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label>State/Region *</label>
+                    <input class="field form-control" id="administrative_area_level_1" disabled="true"></input>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label>Country *</label>
+                    <input class="field form-control" id="country" disabled="true"></input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          <hr>
+          <div class="col-sm-12 text-center">
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+          </form>
+        </div>
+    </div>
+</div>
+
+        <script>
+            // This example displays an address form, using the autocomplete feature
+            // of the Google Places API to help users fill in the information.
+
+            // This example requires the Places library. Include the libraries=places
+            // parameter when you first load the API. For example:
+            // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+            var placeSearch, autocomplete;
+            var componentForm = {
+                street_number: 'short_name',
+                route: 'long_name',
+                locality: 'long_name',
+                administrative_area_level_1: 'short_name',
+                country: 'long_name',
+                postal_code: 'short_name'
+            };
+
+            function initAutocomplete() {
+                // Create the autocomplete object, restricting the search to geographical
+                // location types.
+                autocomplete = new google.maps.places.Autocomplete(
+                        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                        {types: ['geocode']});
+
+                // When the user selects an address from the dropdown, populate the address
+                // fields in the form.
+                autocomplete.addListener('place_changed', fillInAddress);
+            }
+
+            function fillInAddress() {
+                // Get the place details from the autocomplete object.
+                var place = autocomplete.getPlace();
+
+                for (var component in componentForm) {
+                    document.getElementById(component).value = '';
+                    document.getElementById(component).disabled = false;
+                }
+
+                // Get each component of the address from the place details
+                // and fill the corresponding field on the form.
+                for (var i = 0; i < place.address_components.length; i++) {
+                    var addressType = place.address_components[i].types[0];
+                    if (componentForm[addressType]) {
+                        var val = place.address_components[i][componentForm[addressType]];
+                        document.getElementById(addressType).value = val;
+                    }
+                }
+            }
+
+            // Bias the autocomplete object to the user's geographical location,
+            // as supplied by the browser's 'navigator.geolocation' object.
+            function geolocate() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var geolocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        var circle = new google.maps.Circle({
+                            center: geolocation,
+                            radius: position.coords.accuracy
+                        });
+                        autocomplete.setBounds(circle.getBounds());
+                    });
+                }
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCgAQQRGCHdlJRH0MQPqnsTl9SJj3aQPE&libraries=places&callback=initAutocomplete"
+                async defer></script>
