@@ -1,5 +1,4 @@
 'use strict';
-var fs = require('fs');
 const userModel = require('../usermodel.js');
 const mailer_custom = require('../mailer/mail.js');
 module.exports.register = function(req, res){
@@ -60,7 +59,7 @@ module.exports.login = function(req,res){
   });
 }
 
-module.exports.get = function(req,res){
+module.exports.getAll = function(req,res){
   userModel.find({},function(err,users) {
     res.send(users);
   });
