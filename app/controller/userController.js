@@ -115,7 +115,7 @@ module.exports.edit = function(req, res){
 
         if(req.files.file){
           fs.readFile(req.files.file.path, function (err, data) {
-            fs.writeFile('public/images/user/'+req.body['_id'], data, function (err) {
+            fs.writeFile('public/images/user/'+save['_id'], data, function (err) {
 
             });
           });

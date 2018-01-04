@@ -10,8 +10,8 @@
                 <a ui-sref="dashboard.blank"><i class="fa fa-table fa-fw"></i> Cases List<span></span></a>
 
             </li>
-            <li>
-                <a ui-sref="dashboard.cusers"><i class="fa fa-users fa-fw"></i> Users</a>
+            <li ng-class="{active:collapseVar==2}">
+                <a ui-sref="dashboard.cusers" ng-click="check(2)"><i class="fa fa-users fa-fw"></i> Users</a>
             </li>
 
 
