@@ -1,0 +1,121 @@
+<style media="screen">
+.pac-container {
+	z-index: 999999999999999999!important;
+}
+</style>
+<div class="modal-header">
+	<h4 ng-if="row._id" class="modal-title"><i class="fa fa-refresh"></i> Update <small>case</small></h4>
+	<h4 ng-if="!row._id" class="modal-title"><i class="fa fa-plus-circle"></i> Add <small>case</small></h4>
+</div>
+<div class="modal-body">
+	<div class="row">
+
+		<div class="col-xs-12">
+			<form name="AdminForm" ng-submit="AdminForm.$valid && ok()" novalidate>
+				<div class="form-group" ng-if="!file && row._id" style="margin: -15px -15px 15px -15px; background:url({{'/images/case/'+row['_id']}}) no-repeat;background-position:center center; min-height:150px;"></div>
+				<div class="form-group" ng-if="!file &&!row._id" style="margin: -15px -15px 15px -15px; background:url({{'/images/case/123'}}) no-repeat; background-position:center center;min-height:150px;"></div>
+				<div class="form-group" ng-if="file" ngf-background="file" style="margin: -15px -15px 15px -15px; background-repeat:no-repeat; background-position:center center;min-height:150px;border-bottom:1px soild:#ccc;"></div>
+				<label style="position: absolute;top: 112px;left: 44%;" class="label label-warning label-lg" ngf-select ngf-pattern="'image/*'" name="file" ng-model="file" ngf-accept="'image/*'" ngf-max-size="20MB"><i class="fa fa-camera"></i> choose image</label>
+				<div class="alert alert-danger" ng-if="response.error"><i class="fa fa-warning"></i> {{response.msg}}</div>
+			        <div class="alert alert-success" ng-if="row._id && response.error===0"><i class="fa fa-check"></i> Case Updated.</div>
+			        <div class="alert alert-success" ng-if="!row._id && response.error===0"><i class="fa fa-check"></i> Case Added.</div>
+			<div class="form-group" ng-class="{'has-error':AdminForm.title.$invalid}">
+				<label class="control-label" for="title">Case Title</label>
+				<input class="form-control" type="text" name="title" id="title" ng-model="row.title" ng-maxlength="100" ng-minlength="4" ng-required=true>
+			</div>
+			<div class="form-group" ng-class="{'has-error':AdminForm.description.$invalid}">
+				<label class="control-label" for="description">Description</label>
+				<textarea class="form-control" name="description" id="email" ng-model="row.description" ng-maxlength="400" ng-minlength="100" ng-required=true></textarea>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group" ng-class="{'has-error':AdminForm.requiredAmount.$invalid}">
+						<label class="control-label" for="requiredAmount">Required Amount</label>
+						<input class="form-control" type="number" name="requiredAmount" id="requiredAmount" ng-model="row.requiredAmount"  ng-min="0" ng-required=true>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group" ng-class="{'has-error':AdminForm.videoId.$invalid}">
+						<label class="control-label" for="videoId">Youtube video URL</label>
+						<input class="form-control" type="text" name="videoId" id="videoId" ng-model="row.videoId" ng-maxlength="200" ng-minlength="4">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group" ng-class="{'has-error':AdminForm.pin.$invalid}">
+						<label class="control-label" for="pin">PIN</label>
+						<input class="form-control" type="number" name="pin" id="pin" ng-required="true" ng-model="row.pin" ng-maxlength="4" ng-minlength="4" min="0">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" ng-class="{'has-error':AdminForm.adminId.$invalid}">
+						<label class="control-label" for="adminId">Choose Admin user <small style="color:11px;font-weight:normal;">(Autocomplete)</small> </label>
+						<input class="form-control" type="text" name="adminId" id="adminId" ng-model="row.adminId" ng-required="true" typeahead="names.name+' - '+names.email for names in getAdmin($viewValue,'/adminusers')" typeahead-loading="loadingLocations" typeahead-on-select="selectAdmin($item, $model, $label)">
+						<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group" ng-class="{'has-error':AdminForm.userId.$invalid}">
+						<label class="control-label" for="userId">Choose user <small style="color:11px;font-weight:normal;">(Autocomplete)</small> </label>
+						<input class="form-control" type="text" name="userId" id="userId" ng-model="row.userId" ng-required="true" typeahead="names.name+' - '+names.email for names in getAdmin($viewValue,'/users')" typeahead-loading="loadingLocations" typeahead-on-select="selectUser($item, $model, $label)">
+						<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error':AdminForm.address.$invalid}">
+				<label class="control-label" for="description">Address <small>Autocomplete</small> </label>
+				<input type="text" class="form-control" name="address" id="address" ng-model="address" ng-maxlength="400">
+			</div>
+			<div class="row">
+				<div class="col-md-10">
+					<div class="form-group" ng-class="{'has-error':AdminForm.street.$invalid}">
+						<label>Street Adrress</label>
+						<input type="text" name="street" class="form-control" ng-model="row.address.route" ng-required="true">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group" ng-class="{'has-error':AdminForm.housen.$invalid}">
+						<label>House No.</label>
+						<input type="text" name="housen" class="form-control" ng-model="row.address.street_number" ng-required="true">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" ng-class="{'has-error':AdminForm.city.$invalid}">
+						<label>City</label>
+						<input type="text" name="city" class="form-control" ng-model="row.address.locality" ng-required="true">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" ng-class="{'has-error':AdminForm.postal.$invalid}">
+						<label>Postal Code</label>
+						<input type="text" name="postal" class="form-control" ng-model="row.address.postal_code" ng-required="true">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" ng-class="{'has-error':AdminForm.country.$invalid}">
+						<label>Country</label>
+						<input type="text" name="country" class="form-control" ng-model="row.address.country" ng-required="true">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="checkbox">
+				<label class="control-label"><input type="checkbox" ng-model="row.status" ng-checked="row.status == 1" ng-true-value="1" ng-false-value="0"> Active</label>
+				</div>
+
+			</div>
+
+			</form>
+
+
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button ng-if="row._id" class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="AdminForm.$invalid">Update Case</button>
+	<button ng-if="!row._id" class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="AdminForm.$invalid">Add Case</button>
+	<button  class="btn btn-danger" type="button" ng-click="cancel()">Close</button>
+</div>

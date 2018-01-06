@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-
-var db = mongoose.createConnection('localhost', 'openhelp');
 var Schema = mongoose.Schema;
 
 var userLogin = new mongoose.Schema({
@@ -13,6 +11,6 @@ var userLogin = new mongoose.Schema({
     radius:'number',
     root:'boolean'
 })
-var admin = db.model('admin',userLogin);
+var admin = mongoose.model('admin',userLogin);
 
 module.exports=admin;

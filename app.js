@@ -5,6 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost/openhelp",{useMongoClient: true});
+
+require('./app/adminmodel');
+require('./app/categorymodel');
+require('./app/usermodel');
+require('./app/donationModel');
+require('./app/caseModel');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -55,4 +63,3 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-

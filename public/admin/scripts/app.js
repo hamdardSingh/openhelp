@@ -144,6 +144,23 @@ angular
         }
       }
   })
+
+  .state('dashboard.cases',{
+    templateUrl:'views/casesList.html',
+    url:'/cases',
+    controller: 'listController',
+    resolve: {
+      loadMyFiles:function($ocLazyLoad) {
+        return $ocLazyLoad.load({
+          name:'openHelpApp',
+          files:[
+          'scripts/controllers/listController.js',
+          'scripts/controllers/editCaseController.js'
+          ]
+        })
+      }
+    }
+})
       .state('dashboard.form',{
         templateUrl:'views/form.html',
         url:'/form'

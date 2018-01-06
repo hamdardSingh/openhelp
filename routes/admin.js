@@ -5,6 +5,7 @@ var router = express.Router();
 const admin = require("../app/controller/adminController.js");
 const category = require("../app/controller/categoryController.js");
 const user = require("../app/controller/userController.js");
+const cases = require("../app/controller/caseController.js");
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.render('admin/index', {layout:'admin/layout', title: 'openHelp Admin' });
@@ -50,5 +51,16 @@ router.delete('/api/v1/users/:ID', function(req, res, next) {
 	user.delete(req,res);
 });
 
+router.get('/api/v1/cases', function(req, res) {
+  cases.get(req, res);
+});
+
+router.post('/api/v1/cases', multipartyMiddleware, function(req, res, next) {
+	cases.edit(req,res);
+});
+
+router.delete('/api/v1/cases/:ID', function(req, res, next) {
+	cases.delete(req,res);
+});
 
 module.exports = router;

@@ -21,7 +21,7 @@ angular.module('openHelpApp')
   		var extra = {};
   		var size = 'md';var backdrop = true;
 
-      if ($state.current.url == '/adminusers') {
+      if ($state.current.url == '/adminusers' || $state.current.url == '/cases' ) {
         size='lg';
       }
 

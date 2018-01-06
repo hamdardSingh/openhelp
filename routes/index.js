@@ -38,6 +38,19 @@ router.get('/images/user/:ID', function(req, res, next) {
     }
 });
 
+router.get('/images/case/:ID', function(req, res, next) {
+    var id = req.params.ID;
+    var fs = require('fs');
+    var path = require('path');
+    var uri = path.resolve('public/images/user/'+id);
+    if (fs.existsSync(uri)) {
+        res.sendFile(uri);
+    }else{
+      res.sendFile(path.resolve('public/images/feature.png'));
+    }
+});
+
+
 
 
 module.exports = router;
