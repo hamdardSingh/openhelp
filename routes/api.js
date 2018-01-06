@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const user = require("../app/controller/userController.js");
+const category = require("../app/controller/categoryController.js");
 /* GET home page. */
 router.get('/search', function(req, res, next) {
   console.log(req);
@@ -30,6 +31,10 @@ router.post('/change-password', function(req, res) {
 
 router.post('/create-case', function(req, res) {
     user.createCase(req, res);
+});
+
+router.get('/categories',function(req, res){
+  category.get(req,res);
 });
 
 

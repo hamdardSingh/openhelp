@@ -105,3 +105,20 @@ module.exports.delete = function (req,res) {
 	res.send(result);
 	});
 }
+module.exports.createDummy = function (req,res) {
+	var result = [];
+	var newAdmin = new adminModel({
+		name : 'admin',
+		email : 'admin@openhelp.com',
+		password : 'admin123',
+	});
+	newAdmin.save(function (err,save) {
+
+		if(err){
+			result = {error:1,msg:err};
+		}else{
+			result = {error:0,msg:"User Created"};
+		}
+		res.send(result);
+	});
+}
