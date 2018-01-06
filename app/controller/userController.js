@@ -52,6 +52,7 @@ module.exports.login = function(req,res){
   userModel.findOne({'email':req.body.username,'password':req.body.password},function(err,users) {
     var result = {};
     if(users){
+      req.session.user = users;
       result = {error:0, redir: 'ok'};
     }else{
       result = {error:1,message:'invalid username or password'};
@@ -138,4 +139,15 @@ module.exports.delete = function(req, res){
   }
   res.send(result);
   });
+};
+
+module.exports.profilePage = function(req,res){
+  var id = req.session.user['_id'];
+  userModel.findById(id,function(err,user){
+
+    res.render('user/My_Account', {title: 'My Profile',user:user });
+
+  });
+
+  //res.send('no user');
 };

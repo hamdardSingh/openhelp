@@ -8,11 +8,11 @@ module.exports.login = function(req,res){
 	var result = {};
   adminModel.findOne({'email':username,'password':pass},function(err,users) {
     if(users){
-    	req.session.user = users;
+    	req.session.admin = users;
     	result = {error:0, user: users};
 
     }else{
-    	result = {error:1,user:req.session.user};
+    	result = {error:1,user:req.session.admin};
     }
     res.send(result);
   });

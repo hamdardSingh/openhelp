@@ -4,7 +4,7 @@
             <div class="list-group">
 
 
-                <a class="list-group-item" href="/user/welcome">welcome</a>
+                <a class="list-group-item" href="/user/">Home</a>
 
                 <a class="list-group-item active" href="/user/my-account">My Account</a>
 
@@ -16,60 +16,57 @@
         </div>
 
          <div class="col-md-8">
-           <form class="" action="api/v1/profile" method="post">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>First name *</label>
-                        <input type="hidden" name="Feld_Wert_ID[0]" value="vorname" /><div class="form-group ">
-                        <input type="text" maxlength=""  name="Feld_Wert[0]" placeholder="First name" value="" class="form-control">
-                    </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Last name *</label>
-                        <input type="hidden" name="Feld_Wert_ID[1]" value="nachname" /><div class="form-group ">
-                        <input type="text" maxlength=""  name="Feld_Wert[1]" placeholder="Last name" value="" class="form-control">
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Email *</label>
-                        <input type="hidden" name="Feld_Wert_ID[2]" value="mail" /><input type="hidden" name="Feld_Wert[2]" value="" /><div class="form-group ">
-                        <input type="text" maxlength="" name="dummy" placeholder="Email" value="" class="form-control">
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <a href="#" data-toggle="modal" data-target="#mailmodal">Change Email address</a>
-                    </div>
-                </div>
-            </div>
+           <div class="panel panel-primary">
+              <div class="panel-body">
+                <form class="upload" enctype="multipart/form-data" action="api/v1/profile" method="post">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <a href="#" class="text-danger pull-right" data-toggle="modal" data-target="#accountmodal">Delete account</a>
+                    <div class="form-group text-center">
+                      <img src="/images/user/{{user.id}}" alt="" style="height:150px;">
+                      <input type="file" name="file" value="">
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>* Necessary Information</p>
-                </div>
-            </div>
-            <div class="col-sm-12 text-center">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> save</button>
-            </div>
 
-            </form>
+                         <div class="form-group">
+                             <label>First name *</label>
+                             <input type="text"  name="name" placeholder="First name" value="{{user.name}}" class="form-control">
+                         </div>
+
+                       <div class="form-group">
+                           <label>Email *</label>
+                           <input disabled type="email"  name="email" placeholder="Email" value="{{user.email}}" class="form-control">
+                       </div>
+
+
+
+                         <div class="form-group">
+                             <label>Date of birth *</label>
+                             <input type="date"  name="dateOfBirth" value="{{user.dateOfBirth}}" class="form-control">
+                         </div>
+
+                       <div class="form-group">
+                           <label>Contact No*</label>
+                           <input type="text"  name="mobileNo" placeholder="Contact No." value="{{user.mobileNo}}" class="form-control">
+                       </div>
+
+
+
+
+                     <div class="form-group">
+                         <p>* Necessary Information</p>
+                     </div>
+                     <div class="form-group">
+                       <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
+                     </div>
+
+
+                 </div>
+
+                 </form>
+              </div>
+           </div>
+
+
+
+
         </div>
         </div>
     </div>

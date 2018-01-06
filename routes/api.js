@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty();
 const user = require("../app/controller/userController.js");
 const category = require("../app/controller/categoryController.js");
 /* GET home page. */
@@ -37,7 +39,9 @@ router.get('/categories',function(req, res){
   category.get(req,res);
 });
 
-
+router.post('/profile', function(req, res, next) {
+    user.updateProfile(req,res);
+});
 
 
 
