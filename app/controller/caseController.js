@@ -18,6 +18,7 @@ module.exports.edit = function(req, res){
   var result = [];
   req.body.adminId = mongoose.Types.ObjectId(req.body.adminId._id);
   req.body.userId = mongoose.Types.ObjectId(req.body.userId._id);
+  req.body.category = req.body.category.name;
 	if(req.body._id){ // IF EXISTS UPDATE
 		caseModel.findOneAndUpdate({_id : req.body._id},req.body,function (err,category) {
 		    if(err){

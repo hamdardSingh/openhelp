@@ -64,8 +64,8 @@ $('form.upload').ajaxForm({
       var submit = true;
       $('.frm').remove();
       btn = $form.find('button');
-      $form.find('input[type="text"],input[type="password"],input[type="file"]').attr('style','');
-      $form.find('input[type="text"],input[type="password"],input[type="file"]').each(function(){
+      $form.find('input[type="text"],input[type="password"],input[type="file"],select').attr('style','');
+      $form.find('input[type="text"],input[type="password"],input[type="file"],select').each(function(){
           if($(this).val()==""){
               $(this).focus().css({'border-color':'#f44','box-shadow':'0 0 8px #f44'});
               submit = false;
@@ -86,6 +86,53 @@ $('form.upload').ajaxForm({
       }else{
         $('form.upload').prepend('<div class="alert alert-danger frm">'+data.msg+'</div> ');
       }
+    },
+	complete: function(xhr) {
+    btn.button('reset');
+	}
+});
+
+$('form.uploadCase').ajaxForm({
+    dataType:'json',
+    beforeSubmit: function(arr,$form) {
+      var submit = true;
+      $('.frm').remove();
+      btn = $form.find('button');
+      $form.find('input[type="text"],input[type="number"],input[type="password"],input[type="file"],select').attr('style','');
+      $form.find('input[type="text"],input[type="number"],input[type="password"],input[type="file"],select').each(function(){
+          if($(this).val()==""){
+              $(this).focus().css({'border-color':'#f44','box-shadow':'0 0 8px #f44'});
+              submit = false;
+              return false;
+          }
+      });
+      if(!submit) return false;
+      btn.button('loading');
+      $('.panel-form').addClass('hide');
+      $('.panel-search').removeClass('hide');
+    },
+    uploadProgress: function(event, position, total, percentComplete) {
+
+    },
+    success: function(data) {
+      setTimeout(function () {
+        if(data.error && data.error == 1){
+          $('.panel-notFound').removeClass('hide');
+          $('.panel-search').addClass('hide');
+        }else{
+          var confirm =
+            '<div class="text-center text-success">'+
+            '<span class="fa-stack fa-lg fa-5x" style="font-size:98px"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-check fa-stack-1x fa-inverse"></i></span>'+
+            '<div class="alert alert-success">Your case is successfully assingned to your area manager: <strong>'+data.name+'</strong>, <strong>Email: '+data.email+'</strong>. Your area manager will conatct you as soon as possible for further verifcation of you case.</div>'+
+            '<div class="text-center" style="padding:20px;">Your case unique PIN is: <strong>'+data.pin+'</strong></div>'
+            '</div>';
+          ;
+
+          $('.panel-confirm').html(confirm);
+          $('.panel-search').addClass('hide');
+          $('.panel-confirm').removeClass('hide');
+        }
+      }, 7000);
     },
 	complete: function(xhr) {
     btn.button('reset');

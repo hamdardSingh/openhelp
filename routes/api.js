@@ -23,9 +23,6 @@ router.get('/user/getAll', function(req, res) {
     user.getAll(req, res);
 });
 
-router.post('/create-case', function(req, res) {
-    user.createCase(req, res);
-});
 
 router.get('/categories',function(req, res){
   category.get(req,res);
@@ -39,6 +36,6 @@ router.post('/change-password', function(req, res) {
     user.changePassword(req, res);
 });
 
-
+router.post('/create-case',multipartyMiddleware, user.createCase);
 
 module.exports = router;

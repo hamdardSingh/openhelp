@@ -1,7 +1,29 @@
 'use strict';
 var fs = require('fs');
 const userModel = require('../usermodel.js');
+const category = require('../categorymodel.js');
+const caseModel = require('../caseModel.js');
+const admin = require('../adminmodel.js');
 const mailer_custom = require('../mailer/mail.js');
+var mongoose = require('mongoose');
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
 module.exports.register = function(req, res){
 
     if(req.body && req.body.length == 0){
@@ -148,6 +170,18 @@ module.exports.profilePage = function(req,res){
   });
 };
 
+module.exports.casePage = function(req,res){
+
+  var id = req.session.user['_id'];
+  userModel.findById(id,function(err,user){
+    category.find({},function (err,category) {
+
+      res.render('user/New_Case', {title: 'Create New case',user:user ,category:category});
+    })
+
+  });
+};
+
 module.exports.updateProfile = function(req,res){
   var id = req.session.user['_id'];
   userModel.findOneAndUpdate({_id : id},req.body,function(err,user){
@@ -184,3 +218,42 @@ module.exports.changePassword = function(req,res){
   }
 
 };
+
+module.exports.createCase = function(req,res){
+
+  var result = {error:1};
+  admin.find({},function(err,admins){
+
+    admins.forEach(function(admin){
+      if(getDistanceFromLatLonInKm(admin.latlng.lat,admin.latlng.lng,req.body.latlng.lat,req.body.latlng.lng) <= admin.radius){
+        result = admin;
+      }
+    });
+
+    if(!result.error){
+      var pin = Math.floor(1000 + Math.random() * 9000);
+      var newCase = new caseModel({
+        'title': req.body.title,
+        'description': req.body.description,
+        'address': req.body.address,
+        'latlng': req.body.latlng,
+        'requiredAmount': req.body.requiredAmount,
+        'category': req.body.category,
+        'pin':pin,
+        'userId':mongoose.Types.ObjectId(req.session.user['_id']),
+        'adminId':mongoose.Types.ObjectId(result['_id'])
+      });
+      newCase.save(function (err,save) {
+        if(req.files.file){
+          fs.readFile(req.files.file.path, function (err, data) {
+            fs.writeFile('public/images/case/'+save['_id'], data, function (err) {
+
+            });
+          });
+        }
+        res.send({name:result.name,email:result.email,pin:save.pin});
+      })
+    }
+
+  });
+}

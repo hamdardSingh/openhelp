@@ -12,6 +12,7 @@ module.exports.get = function (req, res) {
     res.send(result);
   });
 };
+
 module.exports.edit = function(req, res){
   var result = [];
 	if(req.body._id){ // IF EXISTS UPDATE

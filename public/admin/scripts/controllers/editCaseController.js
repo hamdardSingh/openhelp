@@ -1,13 +1,16 @@
 'use strict';
 angular.module('openHelpApp')
-.controller('editCaseController',function($scope,$rootScope,$modalInstance,$state,$timeout,httpService,Upload,row,extra){
+.controller('editCaseController',function($scope,$rootScope,$modalInstance,$state,$timeout,httpService,$http,Upload,row,extra){
   $scope.oldRow = row;
   $scope.row = angular.copy($scope.oldRow);
   $scope.response = {};
   var Addressautocomplete;
   if(!$scope.row) $scope.row = {};
   if(!$scope.row.address) $scope.row.address = {};
-
+  $scope.categories = [];
+  $http.get('/api/v1/categories').then(function (data) {
+    $scope.categories = data.data;
+  })
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
@@ -30,8 +33,7 @@ angular.module('openHelpApp')
        }, function (resp) {
           $scope.response = {error:1,msg:resp.status};
        }, function (evt) {
-           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-           console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+          
        });
   }
 
