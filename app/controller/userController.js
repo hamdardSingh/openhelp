@@ -11,8 +11,8 @@ module.exports.register = function(req, res){
 
         res.send({'error':1, 'message':'Name should be between 3 and 30 letter'});
 
-    }else if( req.body.password.length <= 6 || req.body.password.length >= 10 ){
-        res.send({'error':1, 'message':'password length must be between 6 to 10 letter'});
+    }else if( req.body.password.length <= 6 || req.body.password.length >= 20 ){
+        res.send({'error':1, 'message':'password length must be between 6 to 20 letter'});
     }else if(req.body.password != req.body['confirm-password']){
         res.send({'error':1, 'message':'new password and confirm password does not match'});
     }else {
@@ -52,6 +52,7 @@ module.exports.login = function(req,res){
   userModel.findOne({'email':req.body.username,'password':req.body.password},function(err,users) {
     var result = {};
     if(users){
+      req.session.user = users;
       result = {error:0, redir: 'ok'};
     }else{
       result = {error:1,message:'invalid username or password'};
@@ -138,4 +139,48 @@ module.exports.delete = function(req, res){
   }
   res.send(result);
   });
+};
+
+module.exports.profilePage = function(req,res){
+  var id = req.session.user['_id'];
+  userModel.findById(id,function(err,user){
+    res.render('user/My_Account', {title: 'My Profile',user:user });
+  });
+};
+
+module.exports.updateProfile = function(req,res){
+  var id = req.session.user['_id'];
+  userModel.findOneAndUpdate({_id : id},req.body,function(err,user){
+    if(err) res.send({error:1,msg:err});
+    if(req.files.file){
+      fs.readFile(req.files.file.path, function (err, data) {
+        if(err) console.log(err);
+        fs.writeFile('public/images/user/'+id, data, function (err) {
+        });
+      });
+    }
+    res.send({error:0,msg:"Profile Updated"});
+  });
+};
+
+
+module.exports.changePassword = function(req,res){
+  var id = req.session.user['_id'];
+  if( req.body.npass.length <= 6 || req.body.npass.length >= 20 ){
+      res.send({'error':1, 'msg':'password length must be between 6 to 20 letter'});
+  }else if(req.body.npass != req.body.rpass){
+    res.send({'error':1, 'msg':'New password doesn\'t match'});
+  }else{
+    userModel.findById(id,function(err,user){
+      if(req.body.cpass != user.password){
+        res.send({'error':1, 'msg':'Invalid current password'});
+      }else{
+        user.password = req.body.npass;
+        user.save(function (err,user) {
+          res.send({error:0,msg:"Password changed successfully"})
+        })
+      }
+    });
+  }
+
 };
