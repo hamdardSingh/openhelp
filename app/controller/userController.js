@@ -256,4 +256,10 @@ module.exports.createCase = function(req,res){
     }
 
   });
-}
+};
+module.exports.myCases = function(req,res){
+  caseModel.find({userId: req.session.user['_id']}).populate('adminId').exec(function(err,cases){
+    res.render('user/myCases', {title: 'My cases',cases:cases});
+  })
+
+};

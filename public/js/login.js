@@ -140,3 +140,7 @@ $('form.uploadCase').ajaxForm({
 });
 
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
