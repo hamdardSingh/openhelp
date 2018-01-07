@@ -17,8 +17,11 @@ router.get('/change-password', function(req, res, next) {
 
 router.get('/create-new-case', user.casePage);
 
-router.get('/forgot-password', function(req, res, next) {
-    res.render('user/forgot_password', {title: 'Expresss' });
+router.get('/my-cases', user.myCases);
+
+router.get('/logout', function(req, res, next) {
+    req.session.destroy();
+    res.redirect('/login');
 });
 
 
