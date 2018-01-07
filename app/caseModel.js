@@ -11,6 +11,7 @@ var cases = new mongoose.Schema({
     status: 'boolean',
     pin: 'number',
     videoId:'string',
+    category:'string',
     requiredAmount:'number',
     createdAt: { type: Date, default: Date.now }
 })
