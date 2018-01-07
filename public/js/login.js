@@ -62,6 +62,7 @@ $('form.upload').ajaxForm({
     dataType:'json',
     beforeSubmit: function(arr,$form) {
       var submit = true;
+      $('.frm').remove();
       btn = $form.find('button');
       $form.find('input[type="text"],input[type="password"],input[type="file"]').attr('style','');
       $form.find('input[type="text"],input[type="password"],input[type="file"]').each(function(){
@@ -77,8 +78,14 @@ $('form.upload').ajaxForm({
     uploadProgress: function(event, position, total, percentComplete) {
 
     },
-    success: function() {
-
+    success: function(data) {
+      if(data && data.error == 0){
+        $('form.upload').prepend('<div class="alert alert-success frm">'+data.msg+'</div> ');
+        var time = new Date().getTime();
+        $('#userpic').attr('src',$('#userpic').attr('src')+'?'+time);
+      }else{
+        $('form.upload').prepend('<div class="alert alert-danger frm">'+data.msg+'</div> ');
+      }
     },
 	complete: function(xhr) {
     btn.button('reset');
