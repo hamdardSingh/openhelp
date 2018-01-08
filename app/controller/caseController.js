@@ -160,5 +160,9 @@ module.exports.casePage = function(req,res){
 }
 
 module.exports.caseDetail = function(req,res){
-  res.render('case',{title:'Cases'});
+  caseModel.findById(req.params.ID).populate(['adminId','userId']).exec(function (err,caser) {
+    var title = (caser) ? caser.title : '404 NOT FOUND'
+    res.render('case',{title:title,case:caser,session:req.session.user});
+  })
+
 }

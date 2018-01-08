@@ -12,7 +12,11 @@ router.get('/cases', caseController.casePage);
 router.get('/case/:ID', caseController.caseDetail);
 
 router.get('/login', function(req, res, next) {
+    if(req.session.user) {
+      res.redirect('/user/');
+    }else{
     res.render('login', { title: 'Login' });
+  }
 });
 
 router.get('/images/admin/:ID', function(req, res, next) {
