@@ -1,6 +1,6 @@
 
   .container {
-      padding: 80px 120px;
+      padding-top: 80px;
   }
   .person {
       border: 10px solid transparent;
@@ -125,4 +125,57 @@
 
   form.register-form{
     display: none;
+}
+
+.featured-search{
+  background: url(/images/ny.jpg) no-repeat;
+  background-position:center center;
+  background-size:cover;
+  height:430px;
+}
+input.home-search{
+   min-width: 426px;
+    height: 50px;
+    border: none;
+    border-radius: 3px 0 0 3px;
+    font-size: inherit;
+    border-top: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-bottom: 1px solid #999999
+}
+
+.btn-srch{
+  height: 50px;
+    border-radius: 0 3px 3px 0;
+}
+
+.case-card{
+  background-color:#fbfbfb;
+  border:1px solid #eee!important;
+}
+
+.case-info{
+  padding: 2px 5px;
+}
+.case-info p{
+  margin-top:0px!important;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.case-info a{
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}
+
+.text-dimmed{
+  color:#aaa;
+}
+.text-amount{
+  font-weight:bold;
 }

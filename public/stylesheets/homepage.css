@@ -1,7 +1,7 @@
 
 
 .container {
-    padding: 80px 120px;
+    padding-top: 80px;
 }
 .person {
     border: 10px solid transparent;
@@ -42,7 +42,7 @@
     border-bottom-left-radius: 0;
 }
 .thumbnail {
-    padding: 0 0 15px 0;
+    padding: 0 0 5px 0;
     border: none;
     border-radius: 0;
 }
@@ -125,7 +125,7 @@ textarea {
 #searchbar{
     position: absolute;
     z-index: 9999999;
-    top: 353px;
+    top: 150px;
     left: 67px;
     right: auto;
     bottom: auto;

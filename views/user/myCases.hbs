@@ -20,6 +20,7 @@
               My Cases
             </div>
              <div class="panel-body">
+               {{#if cases}}
                {{#each cases}}
                <div class="row">
 
@@ -53,7 +54,11 @@
                  </div>
                </div>
                {{/each}}
-
+               {{else}}
+                  <div class="alert alert-warning">
+                      <i class="fa fa-warning"></i> No Cases, <a href="/user/create-new-case">Click Here</a> to create case
+                  </div>
+                {{/if}}
              </div>
         </div>
     </div>
