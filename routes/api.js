@@ -4,6 +4,7 @@ var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
 const user = require("../app/controller/userController.js");
 const category = require("../app/controller/categoryController.js");
+const cases = require("../app/controller/caseController.js");
 /* GET home page. */
 router.get('/search', function(req, res, next) {
   console.log(req);
@@ -27,6 +28,8 @@ router.get('/user/getAll', function(req, res) {
 router.get('/categories',function(req, res){
   category.get(req,res);
 });
+
+router.get('/loadcases',cases.loadCases);
 
 router.post('/profile',multipartyMiddleware, function(req, res, next) {
     user.updateProfile(req,res);
