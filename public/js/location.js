@@ -1,4 +1,5 @@
   var latlong = {};
+  var queryString = {};
   var geocoder = new google.maps.Geocoder();
   if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position){
@@ -7,6 +8,7 @@
         $('.loadCases').removeClass('hide');
         $('.no-location').addClass('hide');
         latlong = {lat:lat,lng:lng};
+        queryString.latlong = latlong;
         $('.loadCases').trigger('loadmycases');
         codeLatLng(lat, lng);
       }, function () {
@@ -34,6 +36,7 @@
     var place = Addressautocomplete.getPlace();
     var latlng = place.geometry.location;
     latlong = {lat:latlng.lat(),lng:latlng.lng()};
+    queryString.latlong = latlong;
   });
 
   if(!latlong.lat || !latlong.lng){
@@ -42,13 +45,31 @@
   }
 
   $('.loadCases').on('loadmycases',function (event) {
-    var limit = $(this).data('limit');
-    $.get('/api/v1/loadcases',{limit:limit,latlong:latlong},function(data){
+    queryString.limit = $(this).data('limit');
+    $.get('/api/v1/loadcases',queryString,function(data){
       $('.loadCases').html(data);
     });
   })
 
+  $('a.category').click(function(e){
+    e.preventDefault();
+    $(this).parent().find('a').removeClass('active');
+    $(this).addClass('active');
+    queryString.category = $(this).data('category');
+    $('.loadCases').trigger('loadmycases');
+  })
   $('button.btn-srch').click(function (e) {
     e.preventDefault();
+    $('.loadCases').trigger('loadmycases');
+  })
+
+  $('select#sortDate').change(function () {
+    if(queryString.sortAmount) delete queryString.sortAmount;
+    queryString.sortDate = $(this).find('option:selected').val();
+    $('.loadCases').trigger('loadmycases');
+  })
+  $('select#sortAmount').change(function () {
+    if(queryString.sortDate) delete queryString.sortDate;
+    queryString.sortAmount = $(this).find('option:selected').val();
     $('.loadCases').trigger('loadmycases');
   })

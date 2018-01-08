@@ -1,14 +1,15 @@
 var express = require('express');
 var router = express.Router();
+var caseController = require('../app/controller/caseController.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Expresss' });
 });
 
-router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'About Us' });
-});
+router.get('/cases', caseController.casePage);
+
+router.get('/case/:ID', caseController.caseDetail);
 
 router.get('/login', function(req, res, next) {
     res.render('login', { title: 'Login' });

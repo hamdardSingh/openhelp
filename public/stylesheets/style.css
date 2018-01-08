@@ -133,6 +133,12 @@
   background-size:cover;
   height:430px;
 }
+.featured-search.small{
+  height:150px!important;
+}
+.featured-search.small input.home-search,.featured-search.small .btn-srch{
+  height:30px!important;
+}
 input.home-search{
    min-width: 426px;
     height: 50px;

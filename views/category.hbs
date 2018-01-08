@@ -1,0 +1,54 @@
+<div class="featured-search small">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="input-group">
+          <input type="text" id="search" class="form-control home-search" value="">
+          <span class="input-group-btn">
+          <button class="btn btn-success btn-srch" name="button"><i class="fa fa-search"></i> Find Case</button>
+        </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div style="background-color:#fbfbfb;border-bottom:1px solid #eee;height:40px" class="hiden-sm">
+  <div class="container" style="padding:5px 15px;">
+    <div class="row">
+      <div class="col-sm-3 " style="    padding-top: 5px;">
+        <strong>Categories <i class="fa fa-arrow-down"></i></strong>
+      </div>
+      <div class="col-sm-9 text-right">
+          <select class="form-control input-sm" id="sortDate" style="width:120px;display:inline-block;">
+            <option value="">Sort by date</option>
+            <option value="asc">Old First</option>
+            <option value="desc" selected>Latest First</option>
+          </select>
+          <select class="form-control input-sm" id="sortAmount" style="width:130px;display:inline-block;">
+            <option value="">Sort by amount</option>
+            <option value="asc">Low to High</option>
+            <option value="desc">High to Low</option>
+          </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="padding-top:10px">
+  <div class="row">
+    <div class="col-md-3">
+
+      <div class="list-group" style="margin-top:5px">
+        {{#each category}}
+          <a href="#" class="list-group-item category" data-category="{{this.name}}">{{this.name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="row loadCases" data-limit="20">
+
+      </div>
+    </div>
+  </div>
+
+</div>
