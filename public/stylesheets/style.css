@@ -154,6 +154,7 @@ input.home-search{
 
 .case-info{
   padding: 2px 5px;
+  overflow: hidden;
 }
 .case-info p{
   margin-top:0px!important;
@@ -163,8 +164,10 @@ input.home-search{
   text-overflow: ellipsis;
 
 }
-.case-info a{
+.case-info a {
+  display:block;
   width: 100%;
+  font-weight:bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
