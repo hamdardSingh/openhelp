@@ -1,5 +1,6 @@
 'use strict';
 const caseModel = require('../caseModel.js');
+const categoryModel = require('../categorymodel.js');
 var mongoose = require('mongoose');
 var fs = require('fs');
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -117,8 +118,13 @@ module.exports.delete = function(req, res){
 module.exports.loadCases = function(req, res){
   var results = '';
   var limit = (typeof(req.query.limit) != 'undefined') ? req.query.limit : 8;
-  caseModel.find({status:1}).sort({createdAt:'desc'}).limit(limit).exec(function(err,cases){
-
+  var sort = {createdAt:'desc'};
+  var findq = {status:1};
+  if(req.query.sortDate) sort = {createdAt:req.query.sortDate};
+  if(req.query.sortAmount) sort = {requiredAmount:req.query.sortAmount};
+  if(req.query.category) findq.category = req.query.category;
+  caseModel.find(findq).sort(sort).limit(limit).exec(function(err,cases){
+      if(cases){
       cases.forEach(function(cases){
         if(getDistanceFromLatLonInKm(cases.latlng.lat,cases.latlng.lng,req.query.latlong.lat,req.query.latlong.lng) <= 100){
           results +=
@@ -138,9 +144,25 @@ module.exports.loadCases = function(req, res){
           ;
         }
       });
+      }
     if(results ==''){
       results = '<div class="col-md-12"><div class="alert alert-warning"><i class="fa fa-warning"></i> No results</div></div>'
     }
     res.send(results);
   });
 };
+
+module.exports.casePage = function(req,res){
+  categoryModel.find({},function(err,data){
+    res.render('category',{title:'Cases',category:data});
+  });
+
+}
+
+module.exports.caseDetail = function(req,res){
+  caseModel.findById(req.params.ID).populate(['adminId','userId']).exec(function (err,caser) {
+    var title = (caser) ? caser.title : '404 NOT FOUND'
+    res.render('case',{title:title,case:caser,session:req.session.user});
+  })
+
+}

@@ -1,0 +1,138 @@
+<div class="featured-search small">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="input-group">
+          <input type="text" id="search" class="form-control home-search" value="">
+          <span class="input-group-btn">
+          <button class="btn btn-success btn-srch" name="button"><i class="fa fa-search"></i> Find Case</button>
+        </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding-top:10px;background-color:#fff">
+  <div class="row">
+    {{#if case}}
+    <div class="col-md-8">
+      <div style="position:relative;background:url(/images/case/{{case._id}}) no-repeat;background-position:center center;background-size:cover;height:300px">
+        {{#if case.videoId}}
+          <button class="btn btn-success watchvideo" data-toggle="modal" data-target="#myModal" style=" position:absolute;bottom:10px;left:38%" data-url="{{case.videoId}}"><i class="fa fa-youtube"></i> Watch video</button>
+        {{/if}}
+      </div>
+      <h3 style="font-weight:bold">{{case.title}} <i class="fa fa-check-circle text-primary"></i> </h3>
+      <p style="text-align:justify">{{case.description}}</p>
+      <h3 style="font-weight:bold;font-size:16px">Donation Address:</h3>
+        <p><i class="fa fa-map-marker"> </i> {{case.address.route}} {{case.address.street_number}}, {{case.address.postal_code}} {{case.address.locality}}, {{case.address.country}}</p>
+        <div class="text-center" style="margin-bottom:100px;margin-top:50px">
+          <a class="btn btn-primary btn-block" href="http://maps.google.com/maps?saddr=my location&daddr={{case.address.route}} {{case.address.street_number}}, {{case.address.postal_code}} {{case.address.locality}}, {{case.address.country}}"><i class="fa fa-map"></i> Get Directions</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="#" style="font-size:16px;font-weight:bold">{{case.userId.name}}</a>
+          <p>{{case.address.route}} {{case.address.street_number}}, {{case.address.locality}}, {{case.address.country}}</p>
+          <div class="progress" style="height:8px;margin-bottom:10px">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="{{case.requiredAmount}}" style="width:20%">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <strong>EUR 100</strong>
+            </div>
+            <div class="col-sm-6 text-right">
+              <strong>EUR {{case.requiredAmount}}</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              {{#if session}}
+              <div class="form-group"  style="margin-top:20px">
+                <label style="font-weight:normal">Enter Amount</label>
+                <input type="text" class="form-control" name="amount" id="damount">
+              </div>
+              <div class="form-group">
+                <button class="btn btn-success">Donate</button>
+              </div>
+              {{else}}
+              <div class="text-center" style="margin:15px 0px">
+                Please <a href="/login">Login</a> to Donate.
+              </div>
+              {{/if}}
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">
+          Case Manager
+        </div>
+        <table class="table table-bordered">
+          <tr>
+            <td colspan="2" class="text-center">
+              <img src="/images/admin/{{case.adminId._id}}" style="height:100px">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Name:</strong>
+            </td>
+            <td>{{case.adminId.name}}</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Email:</strong>
+            </td>
+            <td>{{case.adminId.email}}</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Managing Area:</strong>
+            </td>
+            <td>{{case.adminId.managingArea}}, {{case.adminId.radius}} KM</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {{else}}
+      <div class="text-center text-danger">
+          <i class="fa fa-warning" style="font-size:98px"></i>
+          <div class="">
+            404 NOT FOUND
+          </div>
+      </div>
+    {{/if}}
+  </div>
+
+</div>
+{{#if case.videoId}}
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Watch Video</h4>
+      </div>
+      <div class="modal-body" style="margin:-15px -15px -20px;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function (e) {
+  $(this).find('.modal-body').html('<iframe width="100%" height="400px" src="https://www.youtube.com/embed/{{case.videoId}}?autoplay=true" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>')
+})
+$('#myModal').on('hide.bs.modal', function (e) {
+  $(this).find('.modal-body').html('');
+})
+
+</script>
+{{/if}}

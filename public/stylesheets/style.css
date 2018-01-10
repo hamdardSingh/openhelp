@@ -50,15 +50,7 @@
       color: #555;
   }
 
-  .modal-header, h4, .close {
-      background-color: #333;
-      color: #fff !important;
-      text-align: center;
-      font-size: 30px;
-  }
-  .modal-header, .modal-body {
-      padding: 40px 50px;
-  }
+
   .nav-tabs li a {
       color: #777;
   }
@@ -132,6 +124,12 @@
   background-position:center center;
   background-size:cover;
   height:430px;
+}
+.featured-search.small{
+  height:150px!important;
+}
+.featured-search.small input.home-search,.featured-search.small .btn-srch{
+  height:30px!important;
 }
 input.home-search{
    min-width: 426px;
