@@ -1,6 +1,7 @@
 'use strict';
 const categoryModel = require('../categorymodel.js');
 
+//Method for list categories
 module.exports.get = function (req, res) {
   var result = [];
   categoryModel.find({},function(err,users) {
@@ -12,7 +13,7 @@ module.exports.get = function (req, res) {
     res.send(result);
   });
 };
-
+//Method for update categories
 module.exports.edit = function(req, res){
   var result = [];
 	if(req.body._id){ // IF EXISTS UPDATE
@@ -48,7 +49,7 @@ module.exports.edit = function(req, res){
 		});
 	}
 };
-
+//Method for delete categories
 module.exports.delete = function(req, res){
   var id = req.params.ID;
   var result = [];

@@ -2,6 +2,7 @@
 const adminModel = require('../adminmodel.js');
 var fs = require('fs');
 
+//Method for admin login
 module.exports.login = function(req,res){
 	var username = req.body.username;
 	var pass = req.body.password;
@@ -17,6 +18,8 @@ module.exports.login = function(req,res){
     res.send(result);
   });
 }
+
+//Method for list admin users
 module.exports.usersList = function(req,res){
 	var result = [];
   adminModel.find({},function(err,users) {
@@ -28,6 +31,8 @@ module.exports.usersList = function(req,res){
     res.send(result);
   });
 }
+
+//Method for update admin users
 module.exports.edit = function (req,res) {
 	var result = [];
 	if(req.body._id){ // IF EXISTS UPDATE
@@ -93,6 +98,7 @@ module.exports.edit = function (req,res) {
 	}
 }
 
+//Method for delete admin users
 module.exports.delete = function (req,res) {
 	var id = req.params.ID;
 	var result = [];
@@ -105,6 +111,8 @@ module.exports.delete = function (req,res) {
 	res.send(result);
 	});
 }
+
+//Method for create dummy admin user
 module.exports.createDummy = function (req,res) {
 	var result = [];
 	var newAdmin = new adminModel({

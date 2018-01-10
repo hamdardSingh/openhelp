@@ -1,3 +1,8 @@
+/*********************************************
+APIS FOR Admin
+!!!URL prepends with /admin/
+Example: /api/v1/login = /admin/api/v1/login
+***********************************************/
 var express = require('express');
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();

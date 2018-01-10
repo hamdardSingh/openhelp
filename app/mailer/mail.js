@@ -1,4 +1,7 @@
 'use strict';
+/*
+Common Mail Function for all controllers
+*/
 var app = require('express')();
 var mailer = require('express-mailer');
 var path = require('path');

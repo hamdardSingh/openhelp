@@ -8,20 +8,20 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/openhelp",{useMongoClient: true});
 
+//Loading Database Models
 require('./app/adminmodel');
 require('./app/categorymodel');
 require('./app/usermodel');
-require('./app/donationModel');
 require('./app/caseModel');
+require('./app/donationModel');
 
+//Loading Routes
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 var api = require('./routes/api');
 
 var app = express();
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

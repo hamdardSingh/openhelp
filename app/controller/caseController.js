@@ -1,8 +1,10 @@
 'use strict';
 const caseModel = require('../caseModel.js');
 const categoryModel = require('../categorymodel.js');
+const donationModel = require('../donationModel.js');
 var mongoose = require('mongoose');
 var fs = require('fs');
+//Method or calculate distance b/w two latitudes and longitudes in KM
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -21,6 +23,7 @@ function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
+//Method for display Time ago time stamps
 function timeSince(date) {
 
   var seconds = Math.floor((new Date() - date) / 1000);
@@ -48,6 +51,8 @@ function timeSince(date) {
   }
   return Math.floor(seconds) + " Seconds";
 }
+
+//Method for list cases admin
 module.exports.get = function (req, res) {
   var result = [];
   caseModel.find().populate([{path:'adminId'},{path:'userId'}]).exec(function(err,users) {
@@ -60,6 +65,8 @@ module.exports.get = function (req, res) {
     res.send(result);
   });
 };
+
+//Method for edit cases for admin
 module.exports.edit = function(req, res){
   var result = [];
   req.body.adminId = mongoose.Types.ObjectId(req.body.adminId._id);
@@ -101,7 +108,7 @@ module.exports.edit = function(req, res){
 		});
 	}
 };
-
+//Method for delete cases for admin
 module.exports.delete = function(req, res){
   var id = req.params.ID;
   var result = [];
@@ -114,7 +121,7 @@ module.exports.delete = function(req, res){
   res.send(result);
   });
 };
-
+//Method for list nearby cases using latitude and longitude via api call [/api/v1/loadcases]
 module.exports.loadCases = function(req, res){
   var results = '';
   var limit = (typeof(req.query.limit) != 'undefined') ? req.query.limit : 8;
@@ -151,18 +158,76 @@ module.exports.loadCases = function(req, res){
     res.send(results);
   });
 };
-
+//Method for render cases page for public users
 module.exports.casePage = function(req,res){
   categoryModel.find({},function(err,data){
     res.render('category',{title:'Cases',category:data});
   });
 
 }
+//Method for render case description page for public users
+module.exports.caseDetail = function(req,res,next){
 
-module.exports.caseDetail = function(req,res){
+  //Socket Implementation for updaing progress bar on every
+  //new donation
+  io.sockets.on('connection', function (socket) {
+    socket.on('newDonation', function(data){
+      var id =  mongoose.Types.ObjectId(data);
+      var da = 0;
+      donationModel.aggregate([
+          {$match: {caseId:id}},
+          {$group: {_id:'$userId',total:{$sum:'$donationAmount'}}}
+        ],function(err,result){
+          if(result){
+            da = result[0].total;
+          }
+
+          socket.broadcast.emit('updateProgress',da);
+          socket.emit('updateProgress',da);
+      })
+
+    });
+  });
   caseModel.findById(req.params.ID).populate(['adminId','userId']).exec(function (err,caser) {
     var title = (caser) ? caser.title : '404 NOT FOUND'
-    res.render('case',{title:title,case:caser,session:req.session.user});
+    res.render('case',{title:title,case:caser,session:req.session.user,req:req});
   })
 
+}
+
+//Method for add new donation via api call [/api/v1/new-donation]
+module.exports.newDonation = function(req,res,next){
+  var id = mongoose.Types.ObjectId(req.body['case-id']);
+  caseModel.findOne({_id:id,pin:req.body.pin},function(err,data) {
+    if(data && data._id){
+      var newDonation = new donationModel({
+        caseId: req.body['case-id'],
+        userId: req.session.user['_id'],
+        donationAmount: req.body.amount
+      });
+      newDonation.save(function (err,data) {
+
+        res.send({error:0});
+      })
+    }else{
+      res.send({error:1});
+    }
+  })
+
+}
+//Method for SUM donation amount by grouping caseId & pass to caseDetail method in  this file
+module.exports.getCaseDonation = function(req,res,next){
+  var id =  mongoose.Types.ObjectId(req.params.ID);
+  var da = 0;
+  donationModel.aggregate([
+      {$match: {caseId:id}},
+      {$group: {_id:'$userId',total:{$sum:'$donationAmount'}}}
+    ],function(err,result){
+      if(result){
+        da = result[0].total;
+        req.body.donationAmount = da;
+      }
+  })
+
+  next();
 }
