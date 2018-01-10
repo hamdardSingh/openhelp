@@ -1,6 +1,7 @@
 node_modules
 modules
 .idea
+.project
 public/images/admin
 public/images/user
 public/images/case
