@@ -223,7 +223,7 @@ module.exports.createCase = function(req,res){
 
   var result = {error:1};
   admin.find({},function(err,admins){
-
+    if(err) console.log(err);
     admins.forEach(function(admin){
       if(getDistanceFromLatLonInKm(admin.latlng.lat,admin.latlng.lng,req.body.latlng.lat,req.body.latlng.lng) <= admin.radius){
         result = admin;
@@ -253,6 +253,8 @@ module.exports.createCase = function(req,res){
         }
         res.send({name:result.name,email:result.email,pin:save.pin});
       })
+    }else{
+      res.send({error:1});
     }
 
   });

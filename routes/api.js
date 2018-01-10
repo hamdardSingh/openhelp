@@ -1,3 +1,8 @@
+/*********************************************
+APIS FOR Login, Register, create-new-cases
+!!!URL prepends with /api/v1/
+Example: /search = /api/v1/search 
+***********************************************/
 var express = require('express');
 var router = express.Router();
 var multiparty = require('connect-multiparty');
@@ -5,7 +10,7 @@ var multipartyMiddleware = multiparty();
 const user = require("../app/controller/userController.js");
 const category = require("../app/controller/categoryController.js");
 const cases = require("../app/controller/caseController.js");
-/* GET home page. */
+
 router.get('/search', function(req, res, next) {
   console.log(req);
 console.log(res);
@@ -38,6 +43,8 @@ router.post('/profile',multipartyMiddleware, function(req, res, next) {
 router.post('/change-password', function(req, res) {
     user.changePassword(req, res);
 });
+
+router.post('/new-donation',cases.newDonation);
 
 router.post('/create-case',multipartyMiddleware, user.createCase);
 

@@ -1,3 +1,7 @@
+/*********************************************
+Navigation Routes for user after login
+homepage,chnage password,create case, logout
+***********************************************/
 var express = require('express');
 var router = express.Router();
 var Handlebars  = require('express-handlebars');

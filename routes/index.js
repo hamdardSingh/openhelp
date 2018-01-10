@@ -1,3 +1,6 @@
+/*********************************************
+Navigation Routes for homepage,loginpage,category page, case description page
+***********************************************/
 var express = require('express');
 var router = express.Router();
 var caseController = require('../app/controller/caseController.js');
@@ -9,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/cases', caseController.casePage);
 
-router.get('/case/:ID', caseController.caseDetail);
+router.get('/case/:ID', caseController.getCaseDonation,caseController.caseDetail);
 
 router.get('/login', function(req, res, next) {
     if(req.session.user) {
