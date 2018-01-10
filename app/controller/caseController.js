@@ -139,7 +139,7 @@ module.exports.loadCases = function(req, res){
                 '<div class="thumbnail case-card">'+
                     '<div style="background:url(/images/case/'+cases['_id']+') no-repeat;background-position:center center;background-size:cover;height:130px"></div>'+
                     '<div class="case-info">'+
-                      '<a href="/case/'+cases['_id']+'"><strong>'+cases['title']+'</strong></a>'+
+                      '<a href="/case/'+cases['_id']+'">'+cases['title']+'</a>'+
                       '<p>'+cases['description']+'</p>'+
                       '<div class="row">'+
                         '<div class="col-sm-6 text-dimmed"><i class="fa fa-clock-o"></i> '+timeSince(cases.createdAt)+'</div>'+
@@ -223,9 +223,11 @@ module.exports.getCaseDonation = function(req,res,next){
       {$match: {caseId:id}},
       {$group: {_id:'$userId',total:{$sum:'$donationAmount'}}}
     ],function(err,result){
-      if(result){
+      if(result && result[0]){
         da = result[0].total;
         req.body.donationAmount = da;
+      }else{
+        req.body.donationAmount = 0;
       }
   })
 
